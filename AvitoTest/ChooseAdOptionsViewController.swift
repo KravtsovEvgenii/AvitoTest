@@ -28,6 +28,14 @@ class ChooseAdOptionsViewController: UIViewController {
         setupUI()
         self.presenter?.getNewOffer()
     }
+    
+    private func setStateOfButton() {
+        if isUserSelect {
+            bottomButton.setTitle(header.actionTitle, for: .normal)
+        }else {
+            bottomButton.setTitle(header.denyActionTitle, for: .normal)
+        }
+    }
 }
 //MARK: PresenterToViewChooseAdOptionsProtocol
 extension ChooseAdOptionsViewController: PresenterToViewChooseAdOptionsProtocol{
@@ -36,8 +44,7 @@ extension ChooseAdOptionsViewController: PresenterToViewChooseAdOptionsProtocol{
         self.items = items
         self.header = header
         collectionView.reloadData()
-        guard !isUserSelect else {return}
-        bottomButton.setTitle(header.denyActionTitle, for: .normal)
+        setStateOfButton()
     }
 }
 
@@ -56,11 +63,15 @@ extension ChooseAdOptionsViewController: UICollectionViewDataSource, UICollectio
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         isUserSelect = true
         for i in 0..<items.count {
+            if i == indexPath.row {
+                items[indexPath.row].isSelected = !items[indexPath.row].isSelected
+                isUserSelect = items[indexPath.row].isSelected
+                continue
+            }
             items[i].isSelected = false
         }
-        items[indexPath.row].isSelected = true
+        setStateOfButton()
         choosedItem = items[indexPath.row]
-        bottomButton.setTitle(header.actionTitle, for: .normal)
         collectionView.reloadData()
     }
     
