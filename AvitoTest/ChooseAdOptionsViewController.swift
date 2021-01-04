@@ -70,8 +70,8 @@ extension ChooseAdOptionsViewController: UICollectionViewDataSource, UICollectio
         let width = collectionView.bounds.width * 0.7
         let titleLabelHeight = item.title.calculateHeight(width: width, font: Constant.cellTitleLabelFont)
         let descriptionLabelHeight = item.description?.calculateHeight(width: width, font: Constant.cellDiscriptionLabelFont) ?? 0
-        let priceHeight = item.price.calculateHeight(width: width, font: Constant.cellPriceLabelFont)
-        let overallHeight = titleLabelHeight  + descriptionLabelHeight + priceHeight + 55
+        let priceLabelHeight = item.price.calculateHeight(width: width, font: Constant.cellPriceLabelFont)
+        let overallHeight = titleLabelHeight  + descriptionLabelHeight + priceLabelHeight + 55
         return CGSize(width: collectionView.bounds.width - 8, height: overallHeight)
     }
     
